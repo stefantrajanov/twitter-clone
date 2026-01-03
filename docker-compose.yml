@@ -1,0 +1,45 @@
+services:
+  db:
+    image: postgres:18-alpine
+    container_name: local_postgres_twitter_clone_db
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: twitter_clone_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d twitter_clone_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  server:
+    build: ./server
+    container_name: twitter_clone_server
+    ports:
+      - "3001:3001"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PORT: 3001
+      DATABASE_URL: "postgresql://admin:admin123@db:5432/twitter_clone_db?schema=public"
+      BETTER_AUTH_URL: http://localhost:3001
+      BETTER_AUTH_SECRET: pBsP3D1hpU13iSwHWUZOi9ALMXdXBRRU
+      FRONTEND_URL: http://localhost:3000
+    command: >
+      sh -c "npx drizzle-kit push && npm run db:seed && npm run start:prod"
+
+  client:
+    build: ./client
+    container_name: twitter_clone_client
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
+volumes:
+  postgres_data:
