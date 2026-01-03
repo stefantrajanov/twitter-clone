@@ -9,10 +9,10 @@ import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 interface MobileSidebarProps {
     displayName?: string;
     username?: string;
-    avatarUrl?: string;
+    image?: string;
 }
 
-export default function MobileSidebar({ displayName, username, avatarUrl }: MobileSidebarProps) {
+export default function MobileSidebar({ displayName, username, image }: MobileSidebarProps) {
     return (
         <Sheet>
             <SheetTrigger asChild>
@@ -32,7 +32,7 @@ export default function MobileSidebar({ displayName, username, avatarUrl }: Mobi
                 <Sidebar
                     displayName={displayName}
                     username={username}
-                    avatarUrl={avatarUrl}
+                    image={image}
                     className="w-full border-none"
                 />
             </SheetContent>
