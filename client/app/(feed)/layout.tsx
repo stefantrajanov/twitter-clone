@@ -4,8 +4,9 @@ import {Profile} from "@/lib/types";
 import {fetchRandomUserFollowSuggestions, fetchUserData, UserData} from "./utils";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import Link from "next/link";
+import {ReactNode} from "react";
 
-export default async function FeedLayout({children,}: { children: React.ReactNode; }) {
+export default async function FeedLayout({children,}: { children: ReactNode; }) {
     const userData: UserData | null = await fetchUserData()
     const randomSuggestions: Profile[] = await fetchRandomUserFollowSuggestions();
 

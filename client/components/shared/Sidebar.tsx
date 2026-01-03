@@ -20,11 +20,11 @@ import SignOutButton from "@/components/shared/SignOutButton";
 interface SidebarProps {
     displayName?: string;
     username?: string;
-    avatarUrl?: string;
+    image?: string;
     className?: string;
 }
 
-export default function Sidebar({displayName, username, avatarUrl, className}: SidebarProps) {
+export default function Sidebar({displayName, username, image, className}: SidebarProps) {
     const profileLink = username ? `/${username}` : "/login";
 
     return (
@@ -66,7 +66,7 @@ export default function Sidebar({displayName, username, avatarUrl, className}: S
                         <>
                             <Link href={`/${username}`}>
                                 <Avatar className="w-10 h-10">
-                                    <AvatarImage src={avatarUrl}/>
+                                    <AvatarImage src={image}/>
                                     <AvatarFallback>{displayName.charAt(0).toUpperCase()}</AvatarFallback>
                                 </Avatar>
                             </Link>

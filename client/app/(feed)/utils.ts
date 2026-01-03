@@ -27,6 +27,7 @@ export async function fetchUserData(): Promise<UserData | null> {
                 method: "GET",
                 headers: await headers()
             });
+            console.log(profile);
 
             return {
                 displayName: profile.displayName,
